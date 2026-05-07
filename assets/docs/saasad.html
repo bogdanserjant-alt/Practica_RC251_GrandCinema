@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livrabil Perechea II - All-in-One</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- RESET ȘI BAZĂ --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1d1d1f;
+            line-height: 1.6;
+            background-color: #fff;
+        }
+
+        /* --- SARCINA 1: NAVIGAȚIE SMART (Glassmorphism) --- */
+        header.smart-nav {
+            position: sticky; 
+            top: 0; 
+            z-index: 1000; /* Asigură că meniul plutește peste restul elementelor */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 10%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px); /* Efectul de sticlă mată */
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .logo { font-size: 1.3rem; font-weight: 600; color: #0071e3; }
+        
+        .nav-links a { 
+            text-decoration: none; 
+            color: #333; 
+            margin-left: 20px; 
+            font-weight: 500; 
+            transition: 0.3s;
+        }
+
+        .cta-btn { 
+            background: #0071e3; 
+            color: white !important; 
+            padding: 8px 20px; 
+            border-radius: 20px; 
+        }
+
+        /* --- SARCINA 2: GRID AUTO-ADAPTIV --- */
+        .services-section { padding: 80px 10%; }
+        .section-title { text-align: center; margin-bottom: 40px; font-size: 2rem; }
+
+        .services-grid {
+            display: grid;
+            /* COMENTARIU OBLIGATORIU:
+               '1fr' (Fractional Unit) reprezintă o parte din spațiul liber rămas în grid. 
+               Folosind repeat(auto-fit, minmax(280px, 1fr)), 1fr forțează cardurile 
+               să se extindă pentru a umple tot rândul, evitând spațiile goale 
+               atunci când ecranul nu este ocupat de un număr întreg de coloane.
+            */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: #f5f5f7;
+            padding: 30px;
+            border-radius: 14px;
+            text-align: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #0071e3;
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        /* --- SARCINA 3: MISIUNE (ORDER REVERSE PE MOBIL) --- */
+        .mission-section { padding: 80px 10%; background: #fafafa; }
+        
+        .mission-container { 
+            display: flex; 
+            align-items: center; 
+            gap: 50px; 
+        }
+
+        .mission-text, .mission-visual { flex: 1; }
+
+        .mission-visual {
+            background: linear-gradient(45deg, #0071e3, #2ecc71);
+            height: 300px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- LOGICA RESPONSIVE --- */
+        @media (max-width: 800px) {
+            .mission-container {
+                /* Inversăm ordinea elementelor: Imaginea trece deasupra Textului */
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            
+            header.smart-nav { padding: 15px 5%; }
+            .nav-links { display: none; } /* Opțional: ascundem link-urile pe mobil pentru simplitate */
+        }
+    </style>
+</head>
+<body>
+
+    <header class="smart-nav">
+        <div class="logo">TECH.STUDIO</div>
+        <nav class="nav-links">
+            <a href="#servicii">Servicii</a>
+            <a href="#misiune">Misiune</a>
+            <a href="#" class="cta-btn">Contact</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="servicii" class="services-section">
+            <h2 class="section-title">Servicii Digitale</h2>
+            <div class="services-grid">
+                <article class="card"><h3>Branding</h3><p>Design de logo și identitate vizuală.</p></article>
+                <article class="card"><h3>Web Design</h3><p>Site-uri rapide și ultra-moderne.</p></article>
+                <article class="card"><h3>SEO</h3><p>Optimizare pentru prima pagină Google.</p></article>
+                <article class="card"><h3>Marketing</h3><p>Strategii de creștere în social media.</p></article>
+                <article class="card"><h3>Analiză</h3><p>Interpretarea datelor de business.</p></article>
+                <article class="card"><h3>Cloud</h3><p>Soluții de hosting performante.</p></article>
+            </div>
+        </section>
+
+        <section id="misiune" class="mission-section">
+            <div class="mission-container">
+                <div class="mission-text">
+                    <h2>Misiunea Noastră</h2>
+                    <p>Credem în puterea designului adaptiv. Folosind tehnologii moderne precum CSS Grid și Flexbox, creăm experiențe web care funcționează impecabil de pe orice ecran.</p>
+                </div>
+                <div class="mission-visual">💡</div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="text-align: center; padding: 40px; color: #888; font-size: 0.9rem;">
+        &copy; 2026 Tech Studio. Proiect Perechea II Realizat.
+    </footer>
+
+</body>
+</html>

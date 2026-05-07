@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proba Layout - Flexbox & Grid</title>
+    <style>
+        /* Reset de bază pentru claritate */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { padding: 20px; font-family: sans-serif; background-color: #f0f2f5; }
+        h2 { margin: 20px 0 10px; color: #1a73e8; }
+
+        /* --- SECȚIUNEA A: FLEXBOX --- */
+        .flex-main-container {
+            display: flex;
+            height: 80vh;
+            border: 6px double #333;
+            background-color: #fff;
+            margin-bottom: 40px;
+        }
+
+        .box {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+
+        .box-1 { background-color: #e74c3c; } /* Stânga-sus implicit */
+        
+        .box-2 { 
+            background-color: #3498db; 
+            margin: auto; /* Centrare perfectă pe ambele axe */
+        }
+
+        .box-3 { 
+            background-color: #2ecc71; 
+            align-self: flex-end; /* Aliniere pe axa secundară (jos) */
+        }
+
+        /* --- SECȚIUNEA B: GRID --- */
+        .grid-main-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Două coloane egale */
+            gap: 25px;
+            background-color: #fff;
+            padding: 10px;
+        }
+
+        .grid-item {
+            padding: 30px;
+            text-align: center;
+            font-weight: bold;
+            background-color: rgba(52, 152, 219, 0.2); /* RGBA cu transparență */
+            border: 1px solid #3498db;
+        }
+
+        .grid-item:first-child {
+            grid-column: span 2; /* Ocupă ambele coloane (lățime completă) */
+            background-color: rgba(46, 204, 113, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>A. Flexbox Challenge</h2>
+    <div class="flex-main-container">
+        <div class="box box-1">1</div>
+        <div class="box box-2">2</div>
+        <div class="box box-3">3</div>
+    </div>
+
+    <h2>B. Grid Mosaic</h2>
+    <div class="grid-main-container">
+        <div class="grid-item">Element 1 (Full Width)</div>
+        <div class="grid-item">Element 2</div>
+        <div class="grid-item">Element 3</div>
+        <div class="grid-item">Element 4</div>
+    </div>
+
+</body>
+</html>

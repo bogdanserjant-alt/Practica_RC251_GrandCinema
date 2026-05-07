@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Livrabil Final Ziua 4 - Interactivitate și Validare</title>
+    <style>
+        /* --- RESET ȘI VARIABILE --- */
+        :root {
+            --primary-blue: #0071e3;
+            --card-bg: #f5f5f7;
+            --text-dark: #1d1d1f;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #fff; color: var(--text-dark); line-height: 1.6; }
+
+        /* --- SARCINA 1: NAVIGAȚIE CU UNDERLINE ANIMAT --- */
+        .navbar {
+            position: sticky; top: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 10%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 25px; }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        /* Efectul ::after pentru underline animat */
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--primary-blue);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* --- SARCINA 1: HOVER PE CARDURI --- */
+        .services-section { padding: 80px 10%; }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-card {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 18px;
+            text-align: center;
+            /* Tranziție solicitată */
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+            border: 1px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-12px); /* Ridicare card */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1); /* Umbră intensă */
+            background: #fff;
+            border-color: rgba(0,113,227,0.2);
+        }
+
+        /* --- SARCINA 3: MISIUNE (ORDER) --- */
+        .mission {
+            display: flex; align-items: center; gap: 50px;
+            padding: 80px 10%; background: #fafafa;
+        }
+
+        .mission-text, .mission-img { flex: 1; }
+        .mission-img { 
+            background: var(--primary-blue); height: 250px; border-radius: 20px;
+            display: flex; align-items: center; justify-content: center; font-size: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            .mission { flex-direction: column-reverse; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <div style="font-weight: bold; font-size: 1.2rem;">PRO.DESIGN</div>
+        <ul class="nav-links">
+            <li><a href="#servicii">Servicii</a></li>
+            <li><a href="#misiune">Misiune</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <section id="servicii" class="services-section">
+            <div class="services-grid">
+                <article class="service-card">
+                    <h3>Inovare</h3>
+                    <p>Soluții creative pentru probleme complexe.</p>
+                </article>
+                <article class="service-card">
+                    <h3>Performanță</h3>
+                    <p>Cod optimizat pentru viteză maximă.</p>
+                </article>
+                <article class="service-card">
+                    <h3>Design</h3>
+                    <p>Interfețe intuitive și moderne.</p>
+                </article>
+            </div>
+        </section>
+
+        <section id="misiune" class="mission">
+            <div class="mission-text">
+                <h2>Viziunea noastră</h2>
+                <p>Construim viitorul digital prin design adaptiv și cod validat W3C.</p>
+            </div>
+            <div class="mission-img">🚀</div>
+        </section>
+    </main>
+
+</body>
+</html>

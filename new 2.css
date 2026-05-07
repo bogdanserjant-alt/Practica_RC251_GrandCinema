@@ -1,0 +1,91 @@
+/* Reset și de bază */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    background-color: #f8f9fa;
+    color: #2d3436;
+}
+
+/* Sarcina 1: Navigație Glassmorphism */
+.smart-nav {
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* Asigură că rămâne deasupra tuturor elementelor */
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px); /* Efect de sticlă mată */
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 10%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.nav-links a {
+    text-decoration: none;
+    margin-left: 20px;
+    color: #2d3436;
+    font-weight: 500;
+}
+
+/* Sarcina 2: Grid-ul Self-Adaptive */
+.services-section {
+    padding: 50px 10%;
+}
+
+.services-grid {
+    display: grid;
+    /* EXPLICAȚIE 1fr: 
+       '1fr' înseamnă 'o fracțiune' din spațiul disponibil. În acest context, 
+       după ce auto-fit calculează câte coloane de minim 280px încap, 1fr 
+       instruiește coloanele să se extindă egal pentru a umple tot restul 
+       spațiului rămas în container, evitând golurile pe margini.
+    */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Sarcina 3: Secțiunea Misiune */
+.mission-container {
+    display: flex;
+    align-items: center;
+    padding: 50px 10%;
+    gap: 40px;
+}
+
+.mission-image img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+}
+
+/* Mobil: Inversarea fluxului */
+@media (max-width: 768px) {
+    .mission-container {
+        /* Inversăm ordinea: imaginea va apărea deasupra textului */
+        flex-direction: column-reverse;
+    }
+    
+    .smart-nav {
+        padding: 1rem 5%;
+    }
+}
