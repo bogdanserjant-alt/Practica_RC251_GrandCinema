@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC251 | Ziua 5 - Contact UI Final</title>
+    <style>
+        :root {
+            --form-bg-color: #ffffff;
+            --primary-color: #4a90e2;
+            --error-color: #ff4d4d;
+            --success-color: #2ecc71;
+            --text-main: #333;
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+            max-width: 1000px;
+            width: 100%;
+            background: var(--form-bg-color);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: background var(--transition-speed);
+        }
+
+        @media (max-width: 768px) {
+            .contact-container { grid-template-columns: 1fr; }
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        legend {
+            font-weight: bold;
+            padding: 0 10px;
+            color: var(--primary-color);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group input, 
+        .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            outline: none;
+            font-size: 16px;
+            transition: var(--transition-speed);
+            box-sizing: border-box;
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--form-bg-color);
+            padding: 0 5px;
+            color: #999;
+            pointer-events: none;
+            transition: var(--transition-speed);
+        }
+
+        /* Floating Label Logic */
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label,
+        .input-group textarea:focus + label,
+        .input-group textarea:not(:placeholder-shown) + label {
+            top: 0;
+            font-size: 12px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .input-group input:not(:placeholder-shown):invalid { border-color: var(--error-color); }
+        .input-group input:not(:placeholder-shown):valid { border-color: var(--success-color); }
+
+        .error-msg {
+            color: var(--error-color);
+            font-size: 11px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        input:not(:placeholder-shown):invalid ~ .error-msg {
+            display: block;
+        }
+
+        .btn-submit {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .btn-submit:hover { background: #357abd; }
+
+        .map-section {
+            background: #f9f9f9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Contact & Design Lab - Ziua 5</h1>
+
+    <div class="contact-container">
+        <form id="contactForm" oninput="document.documentElement.style.setProperty('--form-bg-color', themeColor.value)">
+            
+            <fieldset>
+                <legend>Securitate Cont</legend>
+                <div class="input-group">
+                    <input type="text" id="username" name="username" placeholder=" " required pattern="[a-z0-9]{5,}">
+                    <label for="username">Username</label>
+                    <span class="error-msg">Minim 5 caractere (litere mici/cifre).</span>
+                </div>
+
+                <div class="input-group">
+                    <input type="password" id="password" name="password" placeholder=" " required pattern="(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).{8,}">
+                    <label for="password">Parolă</label>
+                    <span class="error-msg">Necesită: 8+ caractere, Majusculă, Cifră, Simbol.</span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Personalizare & Dată</legend>
+                <div class="input-group">
+                    <input type="date" id="date" name="date" min="2026-05-01" max="2026-05-31" required>
+                    <label style="top: 0; font-size: 12px;">Data (Mai 2026)</label>
+                </div>
+
+                <div class="input-group">
+                    <input type="color" id="themeColor" name="themeColor" value="#ffffff">
+                    <label style="top: 0; font-size: 12px;">Culoare Fundal</label>
+                </div>
+            </fieldset>
+
+            <button type="submit" class="btn-submit">Salvează Datele</button>
+        </form>
+
+        <div class="map-section">
+            <div style="padding: 20px;">
+                <h3 style="color: var(--primary-color);">Informații Contact</h3>
+                <p>📍 Str. Tehnologiei, Nr. 101<br>Chișinău, Moldova</p>
+                <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0;">
+                <p><strong>📞 Telefon:</strong><br>+37378289011</p>
+                <p><strong>📧 Email:</strong><br>bogdanserjant@gmail.com</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

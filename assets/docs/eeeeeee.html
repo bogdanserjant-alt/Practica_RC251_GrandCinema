@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RC251 | Ziua 5 - Contact & UX</title>
+    <style>
+        :root {
+            --form-bg-color: #ffffff;
+            --primary-color: #4a90e2;
+            --text-gray: #666;
+            --border-color: #d1d5db;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background-color: #f3f4f6;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Perechea II: Structură Multi-Coloană cu CSS Grid */
+        .main-layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* 2/3 vs 1/3 */
+            gap: 30px;
+            max-width: 1100px;
+            width: 100%;
+            background: var(--form-bg-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        @media (max-width: 850px) {
+            .main-layout { grid-template-columns: 1fr; }
+        }
+
+        /* Perechea II: Grupare Logică */
+        fieldset {
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        legend {
+            font-weight: 700;
+            padding: 0 10px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .form-row { margin-bottom: 20px; position: relative; }
+
+        label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            ring: 2px solid rgba(74, 144, 226, 0.2);
+        }
+
+        /* Input-uri Personalizate: Select Stilizat */
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 12px center;
+            background-size: 16px;
+        }
+
+        /* Textarea cu limită vizibilă */
+        .textarea-container { position: relative; }
+        .char-counter {
+            font-size: 11px;
+            color: var(--text-gray);
+            text-align: right;
+            margin-top: 4px;
+        }
+
+        /* Coloana din dreapta: Detalii */
+        .info-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .map-wrapper iframe {
+            width: 100%;
+            height: 250px;
+            border-radius: 8px;
+            border: none;
+        }
+
+        .contact-details {
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .btn-send {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: opacity 0.2s;
+        }
+
+        .btn-send:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <div class="main-layout">
+        <!-- COLOANA 1: FORMULAR (2/3) -->
+        <section>
+            <form id="mainForm" action="#">
+                
+                <!-- Grupare: Date Personale -->
+                <fieldset>
+                    <legend>Date de Contact</legend>
+                    <div class="form-row">
+                        <label for="full-name">Nume Complet</label>
+                        <input type="text" id="full-name" name="name" 
+                               placeholder="Ex: Bogdan Serjant" 
+                               autocomplete="name" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="email">Adresa Email</label>
+                        <input type="email" id="email" name="email" 
+                               placeholder="bogdanserjant@gmail.com" 
+                               autocomplete="email" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="tel">Telefon</label>
+                        <input type="tel" id="tel" name="phone" 
+                               placeholder="+37378289011" 
+                               autocomplete="tel" required>
+                    </div>
+                </fieldset>
+
+                <!-- Grupare: Mesaj/Subiect -->
+                <fieldset>
+                    <legend>Detaliile Mesajului</legend>
+                    <div class="form-row">
+                        <label for="subject">Subiect Interes</label>
+                        <select id="subject" name="subject" autocomplete="off">
+                            <option value="">Alege o opțiune...</option>
+                            <option value="web">Web Development</option>
+                            <option value="ui">UI/UX Design</option>
+                            <option value="consultancy">Consultanță Tehnică</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <label for="message">Mesaj (Max. 200 caractere)</label>
+                        <div class="textarea-container">
+                            <textarea id="message" name="message" rows="5" 
+                                      maxlength="200" placeholder="Scrie aici mesajul tău..."
+                                      oninput="updateCount(this)"></textarea>
+                            <div class="char-counter"><span id="current">0</span> / 200</div>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <button type="submit" class="btn-send">Trimite Mesajul</button>
+            </form>
+        </section>
+
+        <!-- COLOANA 2: HARTA ȘI INFO (1/3) -->
+        <aside class="info-sidebar">
+            <div class="contact-details">
+                <h3 style="margin-top:0">Contact Direct</h3>
+                <p>📞 <strong>Telefon:</strong><br>+37378289011</p>
+                <p>📧 <strong>Email:</strong><br>bogdanserjant@gmail.com</p>
+                <p>📍 <strong>Sediu:</strong><br>Chișinău, Moldova</p>
+            </div>
+            
+            <div class="map-wrapper">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d173984.00411132624!2d28.705187766060486!3d47.02284908078316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c3628b769a1%3A0x237428c7330030d0!2zQ2hpyJlpbsSDdSwgTW9sZG92YQ!5e0!3m2!1sro!2s!4v1715068800000!5m2!1sro!2s" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </aside>Section
+    </div>
+
+    <script>
+        // Logică pentru contorul de caractere
+        function updateCount(textarea) {
+            const current = document.getElementById('current');
+            current.innerText = textarea.value.length;
+            
+            if (textarea.value.length >= 180) {
+                current.style.color = "red";
+            } else {
+                current.style.color = "var(--text-gray)";
+            }
+        }
+    </script>
+
+</body>
+</html>

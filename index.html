@@ -2,6 +2,7 @@
 <html lang="ro">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Grand Cinema</title>
 
   <style>
@@ -9,39 +10,48 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+
+    :root {
+      --form-bg-color: #111;
+      --primary-red: #e50914;
+      --error-color: #ff4d4d;
+      --success-color: #2ecc71;
     }
 
     body {
       background: #000;
       color: #fff;
+      line-height: 1.6;
     }
 
-    /* HEADER */
     header {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 20px 50px;
       background: #111;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid #222;
     }
 
-    .logo {
-      font-size: 24px;
-      font-weight: bold;
-    }
-
-    .nav {
-      display: flex;
-      gap: 20px;
-    }
+    .logo { font-size: 24px; font-weight: bold; color: var(--primary-red); }
 
     .nav a {
       color: white;
       text-decoration: none;
+      margin-left: 20px;
+      transition: 0.3s;
+      cursor: pointer;
     }
+    .nav a:hover { color: var(--primary-red); }
 
-    /* HERO */
+    .page { display: none; }
+    .page.active { display: block; }
+
     .hero {
       height: 90vh;
       background: url("assets/img/sala.jpg") center/cover no-repeat;
@@ -57,40 +67,23 @@
       border-radius: 10px;
     }
 
-    .hero h1 {
-      font-size: 40px;
-    }
-
-    .hero span {
-      color: red;
-    }
-
-    .hero p {
-      margin: 15px 0;
-    }
+    .hero h1 { font-size: 40px; }
+    .hero span { color: red; }
+    .hero p { margin: 15px 0; }
 
     .btn {
       padding: 10px 20px;
       border: none;
       cursor: pointer;
       margin: 5px;
+      border-radius: 5px;
+      font-size: 15px;
     }
 
-    .btn-primary {
-      background: red;
-      color: white;
-    }
+    .btn-primary { background: red; color: white; }
+    .btn-secondary { background: white; color: black; }
 
-    .btn-secondary {
-      background: white;
-      color: black;
-    }
-
-    /* SECTION */
-    .experienta {
-      padding: 50px;
-      text-align: center;
-    }
+    .experienta { padding: 50px; text-align: center; }
 
     .cards {
       display: flex;
@@ -107,66 +100,303 @@
       overflow: hidden;
     }
 
-    .card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
+    .card img { width: 100%; height: 200px; object-fit: cover; }
+    .card h3 { padding: 15px; }
+
+    .contact-section {
+      padding: 80px 50px;
+      background: #080808;
     }
 
-    .card h3 {
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--form-bg-color);
+      padding: 40px;
+      border-radius: 15px;
+      border: 1px solid #333;
+      transition: background 0.5s ease;
+    }
+
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+      header { padding: 20px; }
+      .contact-section { padding: 40px 20px; }
+    }
+
+    fieldset {
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 30px;
+    }
+
+    legend {
+      color: var(--primary-red);
+      font-weight: bold;
+      padding: 0 10px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .input-group { position: relative; margin-bottom: 30px; }
+
+    .input-group input,
+    .input-group textarea {
+      width: 100%;
       padding: 15px;
+      background: #1a1a1a;
+      border: 2px solid #333;
+      border-radius: 6px;
+      color: #fff;
+      outline: none;
+      font-size: 16px;
+      transition: 0.3s ease;
+    }
+
+    .input-group label {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+      pointer-events: none;
+      transition: 0.3s ease;
+      background: transparent;
+      padding: 0 5px;
+    }
+
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label,
+    .input-group textarea:focus + label,
+    .input-group textarea:not(:placeholder-shown) + label {
+      top: 0;
+      transform: translateY(-50%);
+      left: 10px;
+      font-size: 12px;
+      color: var(--primary-red);
+      background: var(--form-bg-color);
+    }
+
+    .input-group input:focus { border-color: var(--primary-red); }
+    .input-group input:not(:placeholder-shown):valid { border-color: var(--success-color); }
+    .input-group input:not(:placeholder-shown):invalid { border-color: var(--error-color); }
+
+    .error-tooltip {
+      position: absolute;
+      bottom: -20px;
+      left: 0;
+      color: var(--error-color);
+      font-size: 11px;
+      opacity: 0;
+      transition: 0.3s;
+      pointer-events: none;
+    }
+
+    .input-group input:not(:placeholder-shown):invalid ~ .error-tooltip {
+      opacity: 1;
+      bottom: -18px;
+    }
+
+    .btn-submit {
+      position: relative;
+      background: var(--primary-red);
+      color: #fff;
+      border: none;
+      padding: 18px;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      text-transform: uppercase;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    .btn-submit:hover { background: #b20710; }
+
+    .btn-submit::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin: -10px 0 0 -10px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      transition: 0.2s;
+    }
+
+    .btn-submit.loading { color: transparent; }
+    .btn-submit.loading::after {
+      opacity: 1;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .contact-card {
+      background: #161616;
+      padding: 25px;
+      border-radius: 10px;
+      border-left: 4px solid var(--primary-red);
+      margin-bottom: 20px;
+    }
+
+    .contact-card p { margin-bottom: 8px; }
+
+    iframe {
+      width: 100%;
+      height: 250px;
+      border-radius: 10px;
+      filter: grayscale(1) invert(0.9);
+      border: 1px solid #333;
+    }
+
+    .char-count {
+      display: block;
+      text-align: right;
+      font-size: 11px;
+      color: #555;
+      margin-top: 5px;
     }
   </style>
 </head>
-
 <body>
 
-  <!-- HEADER -->
   <header>
     <div class="logo">🎬 GRAND CINEMA</div>
-
     <div class="nav">
-      <a href="#">Acum în cinema</a>
-      <a href="#">În curând</a>
-      <a href="#">Experiențe</a>
-      <a href="#">Carduri cadou</a>
+      <a onclick="showPage('home')">Acum în cinema</a>
+      <a onclick="showPage('home')">În curând</a>
+      <a onclick="showPage('home')">Experiențe</a>
+      <a onclick="showPage('contact')">Contact</a>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Experimentează cinematograful <span>Ca Niciodată</span></h1>
-      <p>Scufundă-te în magia ecranului de argint</p>
+  <!-- PAGINA PRINCIPALĂ -->
+  <div id="home" class="page active">
 
-      <button class="btn btn-primary">Vezi filme</button>
-      <button class="btn btn-secondary">Rezervă bilete</button>
-    </div>
-  </section>
-
-  <!-- EXPERIENȚĂ -->
-  <section class="experienta">
-    <h2>Experiența Cinema</h2>
-
-    <div class="cards">
-
-      <div class="card">
-        <img src="assets/img/cinema.jpg" alt="">
-        <h3>Producție Film</h3>
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Experimentează cinematograful <span>Ca Niciodată</span></h1>
+        <p>Scufundă-te în magia ecranului de argint</p>
+        <button class="btn btn-primary">Vezi filme</button>
+        <button class="btn btn-secondary" onclick="showPage('contact')">Rezervă bilete</button>
       </div>
+    </section>
 
-      <div class="card">
-        <img src="assets/img/postere.jpg" alt="">
-        <h3>Filme Celebre</h3>
+    <section class="experienta">
+      <h2>Experiența Cinema</h2>
+      <div class="cards">
+        <div class="card">
+          <img src="assets/img/cinema.jpg" alt="Cinema">
+          <h3>Producție Film</h3>
+        </div>
+        <div class="card">
+          <img src="assets/img/postere.jpg" alt="Postere">
+          <h3>Filme Celebre</h3>
+        </div>
+        <div class="card">
+          <img src="assets/img/proiector.jpg" alt="Proiector">
+          <h3>Tehnologie Modernă</h3>
+        </div>
       </div>
+    </section>
 
-      <div class="card">
-        <img src="assets/img/proiector.jpg" alt="">
-        <h3>Tehnologie Modernă</h3>
+  </div>
+
+  <!-- PAGINA CONTACT -->
+  <div id="contact" class="page">
+
+    <section class="contact-section">
+      <h2 style="position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0,0,0,0);">Contact</h2>
+      <div class="contact-grid" id="containerPrincipal">
+
+        <form id="formZiua5" oninput="document.getElementById('containerPrincipal').style.setProperty('--form-bg-color', colorTheme.value)">
+
+          <fieldset>
+            <legend>Autentificare Securizată</legend>
+
+            <div class="input-group">
+              <input type="text" id="username" name="username" placeholder=" " required pattern="[a-z0-9]{5,}" autocomplete="username">
+              <label for="username">Username (min. 5 litere mici/cifre)</label>
+              <span class="error-tooltip">Folosiți doar litere mici și cifre (min. 5).</span>
+            </div>
+
+            <div class="input-group">
+              <input type="password" id="password" name="password" placeholder=" " required pattern="(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).{8,}" autocomplete="current-password">
+              <label for="password">Parolă Complexă</label>
+              <span class="error-tooltip">Cerință: 8+ caractere, o majusculă, o cifră, un simbol.</span>
+            </div>
+          </fieldset>
+
+          <fieldset>
+            <legend>Detalii Vizită</legend>
+
+            <div class="input-group">
+              <input type="date" id="dataV" name="dataV" min="2026-05-01" max="2026-05-31" required>
+              <label style="top: 0; font-size: 12px;">Data Rezervării (Mai 2026)</label>
+            </div>
+
+            <div class="input-group">
+              <input type="color" id="colorTheme" name="colorTheme" value="#111111" style="height: 50px; cursor: pointer; padding: 5px;">
+              <label style="top: 0; font-size: 12px;">Culoare Temă Formular</label>
+            </div>
+
+            <div class="input-group">
+              <textarea id="mesaj" name="mesaj" rows="4" maxlength="200" placeholder=" " required oninput="document.getElementById('current').innerText = this.value.length"></textarea>
+              <label for="mesaj">Mesajul tău (Feedback)</label>
+              <span class="char-count"><span id="current">0</span> / 200 caractere</span>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn-submit" id="btnSubmit">Trimite Solicitarea</button>
+        </form>
+
+        <aside>
+          <div class="contact-card">
+            <h3 style="margin-bottom: 15px; color: var(--primary-red);">Suport Tehnic</h3>
+            <p>📞 <strong>Telefon:</strong> +37378289011</p>
+            <p>📧 <strong>Email:</strong> bogdanserjant@gmail.com</p>
+            <p>📍 <strong>Locație:</strong> Chișinău, Moldova</p>
+          </div>
+
+          <div class="map-wrapper">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d173984.00411132624!2d28.705187766060486!3d47.02284908078316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c3628b769a1%3A0x237428c7330030d0!2zQ2hpyJlpbsSDdSwgTW9sZG92YQ!5e0!3m2!1sro!2s!4v1715072000000!5m2!1sro!2s" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </aside>
+
       </div>
+    </section>
 
-    </div>
-  </section>
+  </div>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById(pageId).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    document.getElementById('formZiua5').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnSubmit');
+      btn.classList.add('loading');
+      setTimeout(function() {
+        btn.classList.remove('loading');
+        showPage('home');
+      }, 800);
+    });
+  </script>
 
 </body>
 </html>

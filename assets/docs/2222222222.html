@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grand Cinema | Contact & Rezervări</title>
+
+  <style>
+    /* --- Stiluri Existente Cinema --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    :root {
+      --form-bg-color: #111; /* Fundal implicit dark */
+      --primary-red: red;
+      --error-color: #ff4d4d;
+      --success-color: #2ecc71;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 50px;
+      background: #111;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .nav {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav a {
+      color: white;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    
+    .nav a:hover { color: red; }
+
+    .hero {
+      height: 80vh;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("assets/img/sala.jpg") center/cover no-repeat;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .hero-content {
+      background: rgba(0,0,0,0.8);
+      padding: 40px;
+      border-radius: 10px;
+      border: 1px solid #333;
+    }
+
+    .hero h1 { font-size: 40px; }
+    .hero span { color: red; }
+    .hero p { margin: 15px 0; }
+
+    .btn {
+      padding: 12px 25px;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+      font-weight: bold;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .btn-primary { background: red; color: white; }
+    .btn-secondary { background: white; color: black; }
+    .btn-primary:hover { background: #b30000; }
+
+    .experienta {
+      padding: 50px;
+      text-align: center;
+    }
+
+    .cards {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .card {
+      width: 300px;
+      background: #111;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #222;
+    }
+
+    .card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .card h3 { padding: 15px; }
+
+    /* --- SECȚIUNEA NOUĂ: CONTACT & FORMULAR (ZIUA 5) --- */
+    
+    .contact-section {
+      padding: 60px 50px;
+      background: #050505;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 32px;
+    }
+
+    /* Layout Grid 2/3 vs 1/3 */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      background: var(--form-bg-color);
+      padding: 40px;
+      border-radius: 15px;
+      border: 1px solid #333;
+      transition: background 0.3s ease;
+    }
+
+    @media (max-width: 900px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* Grouping: Fieldset & Legend */
+    fieldset {
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 30px;
+    }
+
+    legend {
+      color: red;
+      font-weight: bold;
+      padding: 0 10px;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    /* Floating Labels & Inputs */
+    .input-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .input-group input, 
+    .input-group select, 
+    .input-group textarea {
+      width: 100%;
+      padding: 15px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 5px;
+      color: white;
+      outline: none;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+
+    .input-group label {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+      pointer-events: none;
+      transition: 0.3s;
+    }
+
+    /* Logică pentru Floating Label */
+    .input-group input:focus + label,
+    .input-group input:not(:placeholder-shown) + label,
+    .input-group textarea:focus + label,
+    .input-group textarea:not(:placeholder-shown) + label {
+      top: -10px;
+      left: 10px;
+      font-size: 12px;
+      color: red;
+      background: #111;
+      padding: 0 5px;
+    }
+
+    /* Validări Vizuale */
+    .input-group input:not(:placeholder-shown):invalid { border-color: var(--error-color); }
+    .input-group input:not(:placeholder-shown):valid { border-color: var(--success-color); }
+
+    .error-hint {
+      color: var(--error-color);
+      font-size: 11px;
+      display: none;
+      margin-top: 5px;
+    }
+
+    input:not(:placeholder-shown):invalid ~ .error-hint { display: block; }
+
+    /* Sidebar Info */
+    .sidebar-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .contact-card {
+      background: #1a1a1a;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid red;
+    }
+
+    iframe {
+      width: 100%;
+      height: 200px;
+      border-radius: 10px;
+      filter: grayscale(1) invert(1); /* Stil hartă dark */
+    }
+
+    .char-count {
+      text-align: right;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">🎬 GRAND CINEMA</div>
+    <div class="nav">
+      <a href="#">Acum în cinema</a>
+      <a href="#">În curând</a>
+      <a href="#">Experiențe</a>
+      <a href="#">Carduri cadou</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Experimentează cinematograful <span>Ca Niciodată</span></h1>
+      <p>Scufundă-te în magia ecranului de argint</p>
+      <button class="btn btn-primary">Vezi filme</button>
+      <button class="btn btn-secondary">Rezervă bilete</button>
+    </div>
+  </section>
+
+  <section class="experienta">
+    <h2>Experiența Cinema</h2>
+    <div class="cards">
+      <div class="card">
+        <img src="assets/img/cinema.jpg" alt="Cinema">
+        <h3>Producție Film</h3>
+      </div>
+      <div class="card">
+        <img src="assets/img/postere.jpg" alt="Postere">
+        <h3>Filme Celebre</h3>
+      </div>
+      <div class="card">
+        <img src="assets/img/proiector.jpg" alt="Proiector">
+        <h3>Tehnologie Modernă</h3>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- ZIUA 5: SECȚIUNEA CONTACT --- -->
+  <section class="contact-section">
+    <h2 class="section-title">Contact & Suport Clienți</h2>
+
+    <div class="contact-grid" id="mainContainer">
+      
+      <!-- Coloana 1: Formular (2/3) -->
+      <form id="cinemaForm" oninput="document.getElementById('mainContainer').style.setProperty('--form-bg-color', colorPicker.value)">
+        
+        <fieldset>
+          <legend>Date Personale</legend>
+          
+          <div class="input-group">
+            <input type="text" id="user" name="user" placeholder=" " required pattern="[a-z0-9]{5,}" autocomplete="username">
+            <label for="user">Username (min. 5 litere mici/cifre)</label>
+            <span class="error-hint">Utilizați minim 5 caractere (doar litere mici și cifre).</span>
+          </div>
+
+          <div class="input-group">
+            <input type="password" id="pass" name="pass" placeholder=" " required pattern="(?=.*\d)(?=.*[A-Z])(?=.*[\W_]).{8,}" autocomplete="current-password">
+            <label for="pass">Parolă (Complexă)</label>
+            <span class="error-hint">8+ caractere, o majusculă, un număr și un simbol.</span>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Detalii Mesaj & Temă</legend>
+          
+          <div class="input-group">
+            <select id="subiect" name="subiect" required>
+              <option value="" disabled selected></option>
+              <option value="rezervare">Problemă Rezervare</option>
+              <option value="eveniment">Organizare Eveniment Private</option>
+              <option value="feedback">Feedback / Sugestii</option>
+            </select>
+            <label for="subiect" style="top: -10px; font-size: 12px; color: red;">Subiectul Mesajului</label>
+          </div>
+
+          <div class="input-group">
+            <input type="date" id="data" name="data" min="2026-05-01" max="2026-05-31" required>
+            <label for="data" style="top: -10px; font-size: 12px;">Data Vizitei (Doar Mai 2026)</label>
+          </div>
+
+          <div class="input-group">
+            <input type="color" id="colorPicker" name="colorPicker" value="#111111" style="height: 50px; cursor: pointer;">
+            <label style="top: -10px; font-size: 12px;">Personalizează culoarea formularului</label>
+          </div>
+
+          <div class="input-group">
+            <textarea id="msg" name="msg" rows="4" maxlength="200" placeholder=" " required oninput="document.getElementById('count').innerText = this.value.length"></textarea>
+            <label for="msg">Mesajul tău...</label>
+            <div class="char-count"><span id="count">0</span> / 200 caractere</div>
+          </div>
+        </fieldset>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px;">Trimite Solicitarea</button>
+      </form>
+
+      <!-- Coloana 2: Info (1/3) -->
+      <aside class="sidebar-info">
+        <div class="contact-card">
+          <h4>Informații Rapide</h4>
+          <p style="margin-top: 10px;">📞 +37378289011</p>
+          <p>📧 bogdanserjant@gmail.com</p>
+          <p>📍 Chișinău, Moldova</p>
+        </div>
+
+        <div class="map-box">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d43551.05373803276!2d28.816362575456247!3d47.02284908078316!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c3628b769a1%3A0x237428c7330030d0!2zQ2hpyJlpbsSDdSwgTW9sZG92YQ!5e0!3m2!1sro!2s!4v1715070000000!5m2!1sro!2s" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+
+        <div class="contact-card" style="border-left-color: white;">
+          <small>Program Suport:<br>Luni - Duminică: 09:00 - 22:00</small>
+        </div>
+      </aside>
+
+    </div>
+  </section>
+
+</body>
+</html>

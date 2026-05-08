@@ -1,0 +1,3 @@
+flex-grow vs flex-shrink: Explicați în notițe cum se împarte spațiul rezidual între elemente. De ce un element "crește" mai repede decât altul?
+align-content vs align-items: Identificați diferența (hint: align-content funcționează doar când există mai multe rânduri/flex-wrap).
+grid-template-areas: Înțelegeți cum puteți "numi" zonele site-ului (Header, Sidebar, Content) în loc să folosiți numere de coloane.
